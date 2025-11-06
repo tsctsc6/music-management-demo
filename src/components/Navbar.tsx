@@ -10,6 +10,7 @@ export default function Navbar() {
     <nav className="top-navbar">
       <button onClick={() => navigate("/")}>Home</button>
       <button onClick={() => navigate("/about")}>About</button>
+      <button onClick={() => navigate("/music-library")}>Music Library</button>
       <p className="navbar-user-info">
         {isLoggedIn ? (
           <>{`Hello, ${user?.name}`} <button onClick={logout}>Logout</button></>

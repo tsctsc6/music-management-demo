@@ -9,6 +9,8 @@ const NotFound = lazy(() => import("./pages/NotFound"));
 
 const Login = lazy(() => import("./pages/Login"));
 
+const MusicLibrary = lazy(() => import("./pages/MusicLibrary"));
+
 export default function App() {
   return (
     <MemoryRouter>
@@ -20,6 +22,7 @@ export default function App() {
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
               <Route path="/login" element={<Login />} />
+              <Route path="/music-library" element={<MusicLibrary />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>
