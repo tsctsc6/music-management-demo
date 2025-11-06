@@ -1,4 +1,5 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
+import { identityService } from "../services/identityServices";
 
 type User = {
     name: string;
@@ -33,8 +34,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         }
     }, []);
 
-    const logout = () => {
+    const logout = async () => {
         setUser(null);
+        await identityService.logout();
         localStorage.removeItem("token");
     };
 
