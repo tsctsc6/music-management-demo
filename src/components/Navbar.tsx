@@ -7,6 +7,7 @@ export default function Navbar() {
   return (
     <nav className="top-navbar">
       <button onClick={() => navigate("/")}>Home</button>
+      <button onClick={() => navigate("/login")}>Login</button>
       <button onClick={() => navigate("/about")}>About</button>
     </nav>
   );
