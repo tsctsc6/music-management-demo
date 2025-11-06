@@ -16,7 +16,7 @@ const LoginForm: React.FC = () => {
 
         try {
             const response = await identityService.login(formData);
-            localStorage.setItem('token', response.data.token);
+            localStorage.setItem('token', response.data?.token || '');
             // 跳转到首页或其他页面
             window.location.href = '/';
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
