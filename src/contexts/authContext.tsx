@@ -27,7 +27,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             const payloadBase64 = token.split(".")[1];
             const payloadJson = atob(payloadBase64);
             const payload = JSON.parse(payloadJson);
-            setUser({ name: payload.uniqueName || null });
+            setUser({ name: payload.unique_name || null });
         } catch {
             setUser(null);
         }
