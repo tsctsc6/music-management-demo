@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { identityService } from '../services/identityServices';
+import { useNavigate } from 'react-router-dom';
 
 const LoginForm: React.FC = () => {
     const [formData, setFormData] = useState({
@@ -8,6 +9,7 @@ const LoginForm: React.FC = () => {
     });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const navigate = useNavigate();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -22,7 +24,7 @@ const LoginForm: React.FC = () => {
             }
             localStorage.setItem('token', response.data?.token || '');
             // 跳转到首页或其他页面
-            window.location.href = '/';
+            navigate("/");
         } catch {
             setError('登录失败');
         } finally {

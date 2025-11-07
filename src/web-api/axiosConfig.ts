@@ -1,4 +1,5 @@
 import axios, { AxiosError } from "axios";
+import { navigateToLogin } from "../navigation";
 
 const apiUrl = import.meta.env.MUSIC_MANAGEMENT_DEMO_API_BASE_URL;
 
@@ -36,7 +37,7 @@ apiClient.interceptors.response.use(
     if (error.response?.status === 401) {
       // 处理未授权
       localStorage.removeItem("jwt");
-      window.location.href = "/identity/login";
+      navigateToLogin();
       return Promise.reject(new Error("Unauthorized"));
     }
     if (error.response?.status === 403) {

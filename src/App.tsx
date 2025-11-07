@@ -1,7 +1,8 @@
-import { lazy, Suspense } from 'react'
+import { lazy, Suspense, useEffect } from 'react'
 import './App.css'
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { MemoryRouter, Route, Routes, useNavigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
+import { setNavigator } from './navigation';
 
 const Home = lazy(() => import("./pages/Home"));
 const About = lazy(() => import("./pages/About"));
@@ -13,9 +14,18 @@ const MusicLibrary = lazy(() => import("./pages/MusicLibrary"));
 
 const Graph = lazy(() => import("./pages/Graph"));
 
+function NavigatorSetup() {
+  const navigate = useNavigate();
+  useEffect(() => {
+    setNavigator(navigate);
+  }, [navigate]);
+  return null;
+}
+
 export default function App() {
   return (
     <MemoryRouter>
+      <NavigatorSetup />
       <div>
         <Navbar />
         <main style={{ width: '100%', height: '100%', padding: "80px 1rem 1rem" }}>
