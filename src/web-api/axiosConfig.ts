@@ -33,7 +33,7 @@ apiClient.interceptors.response.use(
   },
   (error) => {
     // 统一错误处理
-    if (error.response?.status === 401) {
+    if (error.response?.status === 401 || error.response?.status === 403) {
       // 处理未授权
       localStorage.removeItem("token");
       window.location.href = "/identity/login";
