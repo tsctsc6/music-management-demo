@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 const apiUrl = import.meta.env.MUSIC_MANAGEMENT_DEMO_API_BASE_URL;
 
@@ -31,12 +31,15 @@ apiClient.interceptors.response.use(
   (response) => {
     return response;
   },
-  (error) => {
+  (error: AxiosError) => {
     // 统一错误处理
-    if (error.response?.status === 401 || error.response?.status === 403) {
+    const code = error.code || "";
+    if (code === "401" || code === "403") {
       // 处理未授权
+      console.warn("Unauthorized, redirecting to login...");
       localStorage.removeItem("token");
       window.location.href = "/identity/login";
+      return Promise.reject(new Error("Unauthorized"));
     }
     return Promise.reject(error);
   }
