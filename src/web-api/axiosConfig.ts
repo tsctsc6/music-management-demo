@@ -33,13 +33,15 @@ apiClient.interceptors.response.use(
   },
   (error: AxiosError) => {
     // 统一错误处理
-    const code = error.code || "";
-    if (code === "401" || code === "403") {
+    if (error.response?.status === 401) {
       // 处理未授权
-      console.warn("Unauthorized, redirecting to login...");
       localStorage.removeItem("token");
       window.location.href = "/identity/login";
       return Promise.reject(new Error("Unauthorized"));
+    }
+    if (error.response?.status === 403) {
+      // 处理禁止访问
+      return Promise.reject(new Error("Forbidden"));
     }
     return Promise.reject(error);
   }
