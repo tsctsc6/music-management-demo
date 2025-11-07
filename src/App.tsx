@@ -11,6 +11,8 @@ const Login = lazy(() => import("./pages/Login"));
 
 const MusicLibrary = lazy(() => import("./pages/MusicLibrary"));
 
+const Graph = lazy(() => import("./pages/Graph"));
+
 export default function App() {
   return (
     <MemoryRouter>
@@ -23,6 +25,7 @@ export default function App() {
               <Route path="/about" element={<About />} />
               <Route path="/login" element={<Login />} />
               <Route path="/music-library" element={<MusicLibrary />} />
+              <Route path="/graph" element={<Graph />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>
