@@ -22,9 +22,11 @@ function NavigatorSetup() {
   return null;
 }
 
+const initialPath = window.location.pathname + window.location.search + window.location.hash;
+
 export default function App() {
   return (
-    <MemoryRouter>
+    <MemoryRouter initialEntries={[initialPath]}>
       <NavigatorSetup />
       <div>
         <Navbar />
