@@ -1,4 +1,4 @@
-import { Line, LineChart, XAxis, YAxis } from "recharts";
+import { Legend, Line, LineChart, Tooltip, XAxis, YAxis } from "recharts";
 
 interface ChartData {
     name: string;
@@ -54,7 +54,9 @@ export default function Graph() {
                 responsive data={data}>
                 <XAxis dataKey="name" />
                 <YAxis />
-                <Line dataKey="uv" />
+                <Line type="monotone" dataKey="uv" />
+                <Legend align="right" />
+                <Tooltip />
             </LineChart>
         </div>
     );
