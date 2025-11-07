@@ -1,5 +1,7 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
 import { identityService } from "../services/identityServices";
+import type { LoginRequest, LoginResponse } from "../types/identity/login";
+import type { ApiResponse } from "../types/apiResponse";
 
 type User = {
     name: string;
@@ -7,6 +9,7 @@ type User = {
 
 type AuthContextType = {
     user: User | null;
+    login: (request: LoginRequest) => Promise<ApiResponse<LoginResponse>>;
     logout: () => void;
     isLoggedIn: boolean;
 };
@@ -17,8 +20,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [user, setUser] = useState<User | null>(null);
 
-    // 从 localStorage 初始化用户状态
-    useEffect(() => {
+    function updateUserFromToken() {
         const token = localStorage.getItem("jwt");
         if (!token) {
             setUser(null);
@@ -37,7 +39,22 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         } catch {
             setUser(null);
         }
+    }
+
+    // 从 localStorage 初始化用户状态
+    useEffect(() => {
+        updateUserFromToken();
     }, []);
+
+    const login = async (request: LoginRequest) => {
+        const response = await identityService.login(request);
+        if (response.code !== 200) {
+            return response;
+        }
+        localStorage.setItem("jwt", response.data?.token || "");
+        updateUserFromToken();
+        return response;
+    }
 
     const logout = async () => {
         setUser(null);
@@ -49,6 +66,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         <AuthContext.Provider
             value={{
                 user,
+                login,
                 logout,
                 isLoggedIn: !!user,
             }}

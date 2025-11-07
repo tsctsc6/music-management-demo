@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { identityService } from '../services/identityServices';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/authContext';
 
 const LoginForm: React.FC = () => {
     const [formData, setFormData] = useState({
@@ -9,6 +9,7 @@ const LoginForm: React.FC = () => {
     });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const { login } = useAuth();
     const navigate = useNavigate();
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -17,12 +18,11 @@ const LoginForm: React.FC = () => {
         setError('');
 
         try {
-            const response = await identityService.login(formData);
+            const response = await login(formData);
             if (response.code !== 200) {
                 setError(response.errors?.join() || '登录失败');
                 return;
             }
-            localStorage.setItem("jwt", response.data?.token || "");
             // 跳转到首页或其他页面
             navigate("/");
         } catch {
