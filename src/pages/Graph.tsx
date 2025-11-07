@@ -1,49 +1,61 @@
-import { Line, LineChart } from "recharts";
+import { Line, LineChart, XAxis, YAxis } from "recharts";
 
-const data = [
-    {
-        name: 'Page A',
-        uv: 400,
-        pv: 2400,
-        amt: 2400,
-    },
-    {
-        name: 'Page B',
-        uv: 300,
-        pv: 4567,
-        amt: 2400,
-    },
-    {
-        name: 'Page C',
-        uv: 320,
-        pv: 1398,
-        amt: 2400,
-    },
-    {
-        name: 'Page D',
-        uv: 200,
-        pv: 9800,
-        amt: 2400,
-    },
-    {
-        name: 'Page E',
-        uv: 278,
-        pv: 3908,
-        amt: 2400,
-    },
-    {
-        name: 'Page F',
-        uv: 189,
-        pv: 4800,
-        amt: 2400,
-    },
-];
+interface ChartData {
+    name: string;
+    uv: number;
+    pv: number;
+    amt: number;
+}
 
 export default function Graph() {
+
+    const data: ChartData[] = [
+        {
+            name: 'Page A',
+            uv: 400,
+            pv: 2400,
+            amt: 2400,
+        },
+        {
+            name: 'Page B',
+            uv: 300,
+            pv: 4567,
+            amt: 2400,
+        },
+        {
+            name: 'Page C',
+            uv: 320,
+            pv: 1398,
+            amt: 2400,
+        },
+        {
+            name: 'Page D',
+            uv: 200,
+            pv: 9800,
+            amt: 2400,
+        },
+        {
+            name: 'Page E',
+            uv: 278,
+            pv: 3908,
+            amt: 2400,
+        },
+        {
+            name: 'Page F',
+            uv: 189,
+            pv: 4800,
+            amt: 2400,
+        },
+    ];
+
     return (
-        <LineChart style={{ width: '100%', aspectRatio: 1.618, maxWidth: 600 }}
-            responsive data={data}>
-            <Line dataKey="uv" />
-        </LineChart>
+        <div style={{ width: '100%', height: '100%' }}>
+            <LineChart style={{ width: '100%', height: '100%', aspectRatio: 1.618, maxWidth: 600 }}
+                responsive data={data}>
+                <XAxis dataKey="name" />
+                <YAxis />
+                <Line dataKey="uv" />
+            </LineChart>
+        </div>
     );
 }

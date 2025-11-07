@@ -18,7 +18,7 @@ export default function App() {
     <MemoryRouter>
       <div>
         <Navbar />
-        <main style={{ padding: "80px 1rem 1rem" }}>
+        <main style={{ width: '100%', height: '100%', padding: "80px 1rem 1rem" }}>
           <Suspense fallback={<p>Loading...</p>}>
             <Routes>
               <Route path="/" element={<Home />} />
