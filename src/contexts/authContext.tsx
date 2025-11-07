@@ -28,6 +28,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             const payloadBase64 = token.split(".")[1];
             const payloadJson = atob(payloadBase64);
             const payload = JSON.parse(payloadJson);
+            if (isExpired(payload.exp)) {
+                setUser(null);
+                localStorage.removeItem("token");
+                return;
+            }
             setUser({ name: payload.unique_name || null });
         } catch {
             setUser(null);
@@ -62,3 +67,8 @@ export const useAuth = (): AuthContextType => {
     }
     return context;
 };
+
+function isExpired(timestamp: number): boolean {
+    const getUnixTimestamp = (date = new Date()) => Math.floor(date.getTime() / 1000);
+    return getUnixTimestamp() > timestamp;
+}
