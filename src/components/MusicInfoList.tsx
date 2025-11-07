@@ -10,15 +10,22 @@ export default function MusicInfoList() {
     useEffect(() => {
         const getMusicInfo = async () => {
             setLoading(true);
-            const response = await musicService.getAllMusicInfo({});
-            if (response.code !== 200) {
-                setError('获取音乐信息失败: ' + response.errors?.join() || '未知错误');
-                setMusicInfoList([]);
-                setLoading(false);
-                return;
+            try {
+                const response = await musicService.getAllMusicInfo({});
+                if (response.code !== 200) {
+                    setError('获取音乐信息失败: ' + response.errors?.join() || '未知错误');
+                    setMusicInfoList([]);
+                    return;
+                }
+                setMusicInfoList(response.data || []);
             }
-            setLoading(false);
-            setMusicInfoList(response.data || []);
+            catch (err) {
+                setError('获取音乐信息异常: ' + (err as Error).message);
+                setMusicInfoList([]);
+            }
+            finally {
+                setLoading(false);
+            }
         };
         getMusicInfo();
     }, []);
