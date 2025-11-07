@@ -50,7 +50,7 @@ export default function Graph() {
 
     return (
         <div style={{ width: '100%', height: '100%' }}>
-            <LineChart style={{ width: '100%', height: '100%', aspectRatio: 1.618, maxWidth: 600 }}
+            <LineChart style={{ width: '100%', height: '100%', aspectRatio: 1.618, maxWidth: 800 }}
                 responsive data={data}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="name" />
