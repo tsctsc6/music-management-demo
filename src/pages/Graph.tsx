@@ -1,4 +1,4 @@
-import { Legend, Line, LineChart, Tooltip, XAxis, YAxis } from "recharts";
+import { CartesianGrid, Legend, Line, LineChart, Tooltip, XAxis, YAxis } from "recharts";
 
 interface ChartData {
     name: string;
@@ -52,9 +52,14 @@ export default function Graph() {
         <div style={{ width: '100%', height: '100%' }}>
             <LineChart style={{ width: '100%', height: '100%', aspectRatio: 1.618, maxWidth: 600 }}
                 responsive data={data}>
+                <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="name" />
-                <YAxis />
-                <Line type="monotone" dataKey="uv" />
+                <YAxis width="auto" domain={[0, 400]} yAxisId="left" orientation="left"
+                    label={{ value: 'UV', position: 'insideLeft', angle: -90 }} />
+                <YAxis width="auto" domain={[0, 10000]} yAxisId="right" orientation="right"
+                    label={{ value: 'PV', position: 'insideRight', angle: -90 }} />
+                <Line type="monotone" dataKey="uv" stroke="blue" yAxisId="left" />
+                <Line type="monotone" dataKey="pv" stroke="purple" yAxisId="right" />
                 <Legend align="right" />
                 <Tooltip />
             </LineChart>
