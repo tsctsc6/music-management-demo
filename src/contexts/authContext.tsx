@@ -19,7 +19,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     // 从 localStorage 初始化用户状态
     useEffect(() => {
-        const token = localStorage.getItem("token");
+        const token = localStorage.getItem("jwt");
         if (!token) {
             setUser(null);
             return;
@@ -30,7 +30,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             const payload = JSON.parse(payloadJson);
             if (isExpired(payload.exp)) {
                 setUser(null);
-                localStorage.removeItem("token");
+                localStorage.removeItem("jwt");
                 return;
             }
             setUser({ name: payload.unique_name || null });
@@ -42,7 +42,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const logout = async () => {
         setUser(null);
         await identityService.logout();
-        localStorage.removeItem("token");
+        localStorage.removeItem("jwt");
     };
 
     return (

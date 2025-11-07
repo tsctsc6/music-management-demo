@@ -15,7 +15,7 @@ const apiClient = axios.create({
 apiClient.interceptors.request.use(
   (config) => {
     // 添加认证 token
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("jwt");
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -35,7 +35,7 @@ apiClient.interceptors.response.use(
     // 统一错误处理
     if (error.response?.status === 401) {
       // 处理未授权
-      localStorage.removeItem("token");
+      localStorage.removeItem("jwt");
       window.location.href = "/identity/login";
       return Promise.reject(new Error("Unauthorized"));
     }
