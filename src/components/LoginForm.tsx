@@ -22,7 +22,7 @@ const LoginForm: React.FC = () => {
                 setError(response.errors?.join() || '登录失败');
                 return;
             }
-            localStorage.setItem('token', response.data?.token || '');
+            localStorage.setItem("jwt", response.data?.token || "");
             // 跳转到首页或其他页面
             navigate("/");
         } catch {
